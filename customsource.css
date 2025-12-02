@@ -1,0 +1,153 @@
+/* * terminal-source.css
+ * Core logic for the Terminal Chatroom layout.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+:root {
+  /* Core layout variables */
+  --font-display: 'Fira Code', 'Consolas', monospace;
+  --font-primary: 'Fira Code', 'Consolas', monospace;
+  --font-code: 'Fira Code', 'Consolas', monospace;
+  --app-card-radius: 0px; /* Overriding rounded corners from original style */
+  --avatar-size: 0px;     /* Nuke avatars */
+  --message-spacing: 2px; /* Tighten vertical space */
+}
+
+/* 1. GLOBAL RESETS & SHAPE */
+* {
+  font-family: var(--font-primary) !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  text-shadow: none; 
+}
+
+/* Remove the floating card margins seen in Spotify-Discord */
+.appMount__51fd7, body {
+    background-color: var(--terminal-bg) !important;
+}
+.app_a3002d, .bg__960e4 {
+    background: var(--terminal-bg) !important;
+}
+
+/* Sidebar & Panels: Flat borders */
+div[class*="sidebar_"] {
+    background: var(--terminal-bg) !important;
+    border-right: 1px solid var(--terminal-dim);
+    margin: 0 !important; /* Reset margin */
+}
+nav[class*="wrapper_"] {
+    background: var(--terminal-bg) !important;
+    border-right: 1px solid var(--terminal-dim);
+}
+div[class*="panels_"] {
+    background: var(--terminal-bg) !important;
+    border-top: 1px solid var(--terminal-dim);
+}
+
+/* 2. INLINE CHATROOM LOGIC */
+
+/* Hide the user avatar */
+div[class*="avatar_"] {
+    display: none;
+}
+
+/* Tighten the message container */
+li[class*="messageListItem_"] {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+div[class*="message_"] {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: var(--message-spacing) 0 !important;
+    border: none !important;
+    min-height: auto !important;
+}
+
+/* The Magic: Flex the header and content into one line */
+div[class*="contents_"] {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap; /* Allow text to wrap if too long */
+    padding-left: 10px !important;
+    text-indent: 0;
+}
+
+/* Style the Timestamp */
+span[class*="timestamp_"] {
+    width: auto;
+    margin-right: 8px;
+    font-size: 0.8rem;
+    color: var(--terminal-dim);
+    display: inline-block;
+}
+
+/* Style the Username */
+h3[class*="header_"] {
+    display: inline-block;
+    font-size: 1rem;
+    margin-right: 8px;
+    overflow: visible;
+}
+/* Add < > or [ ] around names */
+h3[class*="header_"] span[class*="username_"]::before {
+    content: "<";
+    color: var(--terminal-dim);
+}
+h3[class*="header_"] span[class*="username_"]::after {
+    content: ">";
+    color: var(--terminal-dim);
+}
+
+/* Ensure message content sits inline */
+div[class*="messageContent_"] {
+    display: inline;
+    color: var(--terminal-fg);
+}
+
+/* 3. COMMAND LINE INPUT */
+div[class*="form_"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top: 1px solid var(--terminal-dim);
+}
+div[class*="channelTextArea_"] {
+    background: var(--terminal-bg) !important;
+    margin: 0 !important;
+    padding: 10px !important;
+}
+/* Add the command prompt caret */
+div[class*="textArea_"] {
+    padding-left: 20px !important;
+}
+div[class*="textArea_"]::before {
+    content: "$";
+    position: absolute;
+    left: 0px;
+    color: var(--terminal-accent);
+    font-weight: bold;
+}
+
+/* 4. UTILITY HIDING (Reduce Bloat) */
+/* Hide server banners, Nitro buttons, sticker buttons */
+div[class*="banner_"], 
+button[aria-label="Send a gift"],
+button[aria-label="Open sticker picker"],
+div[class*="children_"]::after { 
+    display: none !important; 
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--terminal-dim) !important;
+    border: 1px solid var(--terminal-bg);
+}
+::-webkit-scrollbar-track {
+    background-color: var(--terminal-bg) !important;
+}
